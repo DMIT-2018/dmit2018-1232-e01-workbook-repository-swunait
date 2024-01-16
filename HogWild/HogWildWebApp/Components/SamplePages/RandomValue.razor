@@ -1,0 +1,24 @@
+﻿<h3>Random Value</h3>
+
+<div>
+    <h3>Demonstration of using methods</h3>
+
+    <!-- Conditionally display content based on the 'myName' variable. -->
+    <p>
+        @if (string.IsNullOrWhiteSpace(myName))
+        {
+            <!-- Display a message when 'myName' is empty or null, indicating that the random number is odd. -->
+        <p>The random number is odd {@oddEvenValue}</p>
+        }
+        else
+        {
+        <!-- Display the value of 'myName' when it's not empty. -->
+        <p>@myName</p>
+        }
+    </p>
+
+    <!-- This is a button that triggers the 'RandomValue' method when clicked. -->
+    <button class="btn-success" @onclick="GenerateRandomValue">
+        Generate Random Value
+    </button>
+</div>
