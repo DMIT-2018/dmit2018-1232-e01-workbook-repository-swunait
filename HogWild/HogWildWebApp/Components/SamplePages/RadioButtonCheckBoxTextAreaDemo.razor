@@ -1,0 +1,44 @@
+﻿<h3>RadioButtonCheckBoxTextAreaDemo</h3>
+
+<div>
+    @feedback
+</div>
+
+<!-- Individual Radio Buttons -->
+<h3>Radiobuttons CheckBox TextArea</h3>
+<br />
+<!-- Radio Buttons using Collections -->
+<label>
+    Select your favorite meal using a foreach loop<br />
+</label>
+<br />
+@foreach (var item in meals)
+{
+    @*  Loop through the meals list and create radio buttons for each meal option *@
+    <input type="radio" name="meal" value="@item" 
+        @onchange="HandleMealSelection"  /> @item
+    <br />  <!-- Line break to separate radio buttons -->
+}
+<br />
+<!-- Label for the checkbox indicating agreement to terms -->
+<label>
+    <!-- Checkbox input bound to the acceptanceBox variable -->
+    <input type="checkbox" @bind="acceptanceBox" />
+    <!-- Label text indicating the agreement -->
+    &nbsp; I agree to terms
+</label>
+
+<br />
+<br />
+<!-- Textarea input element -->
+<textarea rows="5" cols="50" placeholder="enter message"
+          @bind="messageBody">
+</textarea><!-- Data binding to the 'messageBody' C# variable -->
+
+<br />
+
+<br />
+<!-- Button element for submitting the RadioCheckAreaSubmit method when clicked -->
+<button class="btn-success" @onclick="RadioCheckAreaSubmit">
+    Radio/Check/Area Submit
+</button>

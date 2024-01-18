@@ -1,0 +1,34 @@
+﻿<h3>TextBoxesDemo</h3>
+
+<div>
+    <!-- Heading for this section -->
+    <h3>TextBoxes</h3>
+    <!-- Label and input for entering an email -->
+    <label>
+        Enter an Email
+        <input type="email" @bind="emailText"
+               placeholder="enter email" />
+    </label>
+    <br />
+    <!-- Label and input for entering a password -->
+    <label>
+        Enter a Password
+        <input type="password" @bind="passwordText"
+               placeholder="enter password" />
+    </label>
+    <br />
+    <!-- Label and input for entering a date -->
+    <label>
+        Enter a Date
+        <input type="date" @bind="dateText" />
+    </label>
+    <br />
+    <!-- Button to trigger the TextSubmit method -->
+    <button class="btn-success" @onclick="TextSubmit">
+        Text Submit
+    </button>
+</div>
+
+<div>
+    @feedback
+</div>
