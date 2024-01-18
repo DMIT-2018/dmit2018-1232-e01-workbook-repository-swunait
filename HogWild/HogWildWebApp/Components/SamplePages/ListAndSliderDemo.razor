@@ -1,0 +1,68 @@
+﻿<h3>ListAndSliderDemo</h3>
+
+<div class=onethird>
+    <h3>List and Slider</h3>
+    <label>
+        <!-- Display a label for the dropdown, instructing the user to select their favorite ride. -->
+        Select your favorite Ride
+
+        <!-- Create a dropdown select element that binds to the 'myRide' property. -->
+        <select @bind="myRide">
+
+            <!-- Default option with a value of "0" and instructs the user to select a ride. -->
+            <option value="0">Select ride ...</option>
+
+            <!-- Loop through each 'ride' in the 'rides' collection and create an option element for each. -->
+            @foreach (var ride in @rides)
+            {
+                <!-- Set the option value to the 'ValueID' of the 'ride' object. -->
+                <option value="@ride.ValueID">
+                    <!-- Display the 'DisplayText' of the 'ride' object as the option text. -->
+                    @ride.DisplayText
+                </option>
+            }
+        </select>
+    </label>
+    <br />
+    <br />
+    <label>
+        <!-- Display a label for the dropdown, instructing the user to select their favorite vacation spot. -->
+        Select your favorite Vacation Spot
+
+        <!-- Create a dropdown select element and bind its value to the 'vacationSpot' property. -->
+        <select @bind="vacationSpot">
+
+            <!-- Default option with a value of "0" instructs the user to select a spot. -->
+            <option value="0">Select a spot ...</option>
+
+            <!-- Loop through each 'spot' in the 'vacationSpots' collection and create an option element for each. -->
+            @foreach (var spot in @vacationSpots)
+            {
+                <!-- Set the option value to the 'spot' itself. -->
+                <option value="@spot">
+                    <!-- Display the 'spot' as the option text. -->
+                    @spot
+                </option>
+            }
+        </select>
+    </label>
+    <br />
+    <label>
+        <!-- Display a label instructing the user to rate the form control review on a scale from bad to good. -->
+        Rate the form control review (bad to good)
+
+        <!-- Create an input element of type 'range' for rating, binding its value to the 'ReviewRating' property. -->
+        <input type="range" min="0" max="10" step="1" @bind="reviewRating" />
+    </label>
+
+    <br />
+    <!-- Create a button element with a CSS class 'btn-success' and an 'onclick' event handler. -->
+    <button class="btn-success" @onclick="ListSliderSubmit">
+        <!-- Display the button label "List & Slider." -->
+        List & Slider
+    </button>
+</div>
+
+<div>
+    <h2>@feedback</h2>
+</div>

@@ -31,6 +31,25 @@
         </div>
 
         <div class="nav-item px-3">
+            <!-- NavLink to expand or collapse the Sample Pages section -->
+            <NavLink class="nav-link" @onclick="()=>expandSamplePages = !expandSamplePages">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Sample Pages
+            </NavLink>
+
+            <!-- Check if the Sample Pages section is expanded -->
+            @if (expandSamplePages)
+
+            {
+                <!-- Nested NavLink within the Sample Pages section -->
+                <NavLink class="nav-link" href="/basics">
+
+                    <span>Basic</span>
+
+                </NavLink>
+            }
+        </div>
+
+        <div class="nav-item px-3">
             <NavLink class="nav-link" href="auth">
                 <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Auth Required
             </NavLink>
@@ -70,6 +89,12 @@
 </div>
 
 @code {
+    //  Holds the curre = true;nt state of the Sample Pages section toggle
+    private bool expandSamplePages;
+
+    private bool collapseNavMenu = true;
+
+
     private string? currentUrl;
 
     protected override void OnInitialized()
