@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HogWildSystem.DAL;
 
-public partial class HogWildContext : DbContext
+internal partial class HogWildContext : DbContext
 {
     public HogWildContext(DbContextOptions<HogWildContext> options)
         : base(options)

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace HogWildSystem.Entities;
 
 [Table("Invoice")]
-public partial class Invoice
+internal partial class Invoice
 {
     [Key]
     public int InvoiceID { get; set; }

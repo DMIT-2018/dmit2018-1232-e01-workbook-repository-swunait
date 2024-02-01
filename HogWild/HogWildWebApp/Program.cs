@@ -5,7 +5,14 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+using HogWildSystem;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionStringHogWild = builder.Configuration
+    .GetConnectionString("OLTP-DMIT2018");
+builder.Services.AddBackendDependencies(
+    options => options.UseSqlServer(connectionStringHogWild));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

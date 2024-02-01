@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace HogWildSystem.Entities;
 
 [Table("Lookup")]
-public partial class Lookup
+internal partial class Lookup
 {
     [Key]
     public int LookupID { get; set; }
