@@ -1,4 +1,4 @@
-﻿namespace HogWildWebApp.Components.SamplePages
+﻿namespace HogWildWebApp.Components.Pages.SamplePages
 {
     public partial class TextBoxesDemo
     {

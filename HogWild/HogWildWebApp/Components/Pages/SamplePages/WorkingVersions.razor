@@ -1,0 +1,24 @@
+﻿@page "/CheeseBurger"
+
+<h3>WorkingVersions</h3>
+
+<div>
+    @if (workingVersionView.VersionId > 0)
+    {
+        <p>Version ID: @workingVersionView.VersionId</p>
+        <p>Major: @workingVersionView.Major</p>
+        <p>Minor: @workingVersionView.Minor</p>
+        <p>Build: @workingVersionView.Build</p>
+        <p>Revision: @workingVersionView.Revision</p>
+        <p>Date: @workingVersionView.AsOfDate</p>
+        <p>Comments: @workingVersionView.Comments</p>
+    }
+    <!-- Button to trigger the "Get Working Version"" method -->
+    <button class="btn-success" @onclick="GetWorkingVersions">
+        Working Versions
+    </button>
+</div>
+
+<div>
+    <h2>@feedback</h2>
+</div>

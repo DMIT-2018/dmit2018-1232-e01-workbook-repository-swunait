@@ -1,7 +1,7 @@
 ﻿using HogWildWebApp.Data.ViewModels;
 
-namespace HogWildWebApp.Components.SamplePages
-{
+namespace HogWildWebApp.Components.Pages.SamplePages
+{ 
     public partial class ListAndSliderDemo
     {
         #region List and Sliders
