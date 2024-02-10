@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 // https://github.com/villainoustourist/Blazor.Pagination/tree/master
 
-namespace HogWildWebApp.BlazorPagination
+namespace HogWildWebApp.Components.BlazorPagination
 {
     public partial class BlazorPager : ComponentBase
     {
