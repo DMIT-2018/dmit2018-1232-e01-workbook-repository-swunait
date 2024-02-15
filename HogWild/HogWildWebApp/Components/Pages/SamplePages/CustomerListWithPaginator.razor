@@ -1,0 +1,131 @@
+﻿@page "/SamplePages/CustomerListWithPaginator"
+@using HogWildWebApp.Components.Layout
+@using HogWildWebApp.Components.BlazorPagination
+
+
+<PageTitle>Customer List with Paginator</PageTitle>
+<h3>Customer List with Paginator</h3>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<header>
+    <h4>Search</h4>
+    <p>
+        <label>Last Name:</label>
+        <InputText id="lastName"
+                   Style="Width: 140px; background-color: lightgray"
+                   @bind-Value="lastName" />
+    </p>
+    <p>
+        <label>Phone #:</label>
+        <InputText id="phoneNumber"
+                   Style="Width: 140px; background-color: lightgray"
+                   @bind-Value="phoneNumber" />
+    </p>
+    <button class="btn-success" @onclick="Search">Search</button>
+    <button class="btn-success" @onclick="New">New</button>
+</header>
+<body>
+    @if (PaginatorCustomerSearch.RowCount == 0)
+    {
+        <p><em>Please enter either a last name or phone number</em></p>
+    }
+    else
+    {
+        <!-- THis section defines a TableTemplate for displaying customer infomration-->
+        <TableTemplate Items="PaginatorCustomerSearch.Results" Context="CustomerSearchView">
+            <!-- The following section defines the header row of the table.-->
+            <TableHeader>
+                <!-- Labels information in each column -->
+                <th></th> <!-- Empty column for buttons -->
+                <th></th> <!-- Empty column for buttons -->
+                <th class="SortField @GetSortColumn("FirstName")"
+                    @onclick="@( () => Sort("FirstName"))">
+                    First Name
+                    <i class="@(SetSortIcon("FirstName"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("LastName")"
+                    @onclick="@( () => Sort("LastName"))">
+                    Last Name
+                    <i class="@(SetSortIcon("LastName"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("City")"
+                    @onclick="@( () => Sort("City"))">
+                    City
+                    <i class="@(SetSortIcon("City"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("Phone")"
+                    @onclick="@( () => Sort("Phone"))">
+                    Phone
+                    <i class="@(SetSortIcon("Phone"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("Email")"
+                    @onclick="@( () => Sort("Email"))">
+                    Email
+                    <i class="@(SetSortIcon("Email"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("TotalSales")"
+                    @onclick="@( () => Sort("TotalSales"))">
+                    Total Sales
+                    <i class="@(SetSortIcon("TotalSales"))"></i>
+                </th>
+            </TableHeader>
+            <!-- The following section defines the row template for displaying customer data. -->
+            <RowTemplate>
+                <td>
+                    <!-- Button to edit the customer's information -->
+                    <button class="btn-success"
+                            @onclick="() => EditCustomer(CustomerSearchView.CustomerID)">
+                        Edit
+                    </button>
+                </td>
+                <td>
+                    <!-- Button to create a new invoice for the customer -->
+                    <button class="btn-success"
+                            @onclick="() => NewInvoice(CustomerSearchView.CustomerID)">
+                        New Invoice
+                    </button>
+                </td>
+                <!-- Display customer information in each column -->
+                <td>@CustomerSearchView.FirstName</td>
+                <td>@CustomerSearchView.LastName</td>
+                <td>@CustomerSearchView.City</td>
+                <td>@CustomerSearchView.Phone</td>
+                <td>@CustomerSearchView.Email</td>
+                <td>$@CustomerSearchView.TotalSales</td>
+            </RowTemplate>
+        </TableTemplate>
+         <div align="center">
+            <BlazorPager CurrentPage="PaginatorCustomerSearch.CurrentPage"
+                         PageCount="PaginatorCustomerSearch.PageCount"
+                         VisiblePages="3"
+                         ShowFirstLast="true"
+                         ShowPageNumbers="true"
+                         FirstText="&laquo;"
+                         LastText="&raquo;"
+                         NextText="&rsaquo;"
+                         PreviousText="&lsaquo;"
+                         OnPageChanged="(async e => { CurrentPage = e; await Search();})">
+            </BlazorPager>
+        </div>
+    }
+</body>
+<footer>
+    @if (hasFeedback)
+    {
+        <blockquote>@feedbackMessage</blockquote>
+    }
+    @if (hasError)
+    {
+        <blockquote>
+            @errorMessage
+            <ul>
+                @foreach (var detail in errorDetails)
+                {
+                    <li>@detail</li>
+                }
+            </ul>
+        </blockquote>
+    }
+</footer>
