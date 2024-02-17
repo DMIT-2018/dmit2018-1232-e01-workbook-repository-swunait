@@ -1,0 +1,37 @@
+﻿@page "/categorylist"
+
+@using NorthwindBlazorApp.Components.Layout
+
+<h3>CategoryList</h3>
+
+@if (feedback != null)
+{
+    <h2>@feedback</h2>
+}
+
+<button @onclick="OnSearch">Execute Query</button>
+
+@if (queryResultList != null)
+{
+    if (queryResultList.Count == 0)
+    {
+        feedback = "There are no results returned.";
+    }
+    else
+    {
+        <TableTemplate Items="queryResultList" 
+            Context="CurrentCategory">
+            <TableHeader>
+                <th>Category ID</th>
+                <th>Name</th>
+                <th>Description</th>
+            </TableHeader>
+            <RowTemplate>
+                <td>@CurrentCategory.CategoryID</td>
+                <td>@CurrentCategory.Name</td>
+                <td>@CurrentCategory.Description</td>
+            </RowTemplate>
+
+        </TableTemplate>
+    }
+}

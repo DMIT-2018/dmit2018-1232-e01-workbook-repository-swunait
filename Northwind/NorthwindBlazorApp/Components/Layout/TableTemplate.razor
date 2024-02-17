@@ -1,0 +1,32 @@
+﻿@*https://learn.microsoft.com/en-us/aspnet/core/blazor/components/templated-components?view=aspnetcore-7.0*@
+@typeparam TItem
+@using System.Diagnostics.CodeAnalysis
+
+<table class="table">
+    <thead>
+    <tr>@TableHeader</tr>
+    </thead>
+    <tbody>
+    @if (Items != null)
+    {
+        @foreach (var item in Items)
+        {
+            if (RowTemplate is not null)
+            {
+                <tr>@RowTemplate(item)</tr>
+            }
+        }
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public RenderFragment? TableHeader { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem>? RowTemplate { get; set; }
+
+    [Parameter, AllowNull]
+    public IReadOnlyList<TItem> Items { get; set; }
+}
