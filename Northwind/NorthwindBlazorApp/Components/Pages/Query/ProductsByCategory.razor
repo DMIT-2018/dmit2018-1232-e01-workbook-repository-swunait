@@ -1,0 +1,21 @@
+﻿<h3>ProductsByCategory</h3>
+
+
+<footer>
+    @if (hasFeedback)
+    {
+        <blockquote>@feedbackMessage</blockquote>
+    }
+    @if (hasError)
+    {
+        <blockquote>
+            @errorMessage
+            <ul>
+                @foreach (var detail in errorDetails)
+                {
+                    <li>@detail</li>
+                }
+            </ul>
+        </blockquote>
+    }
+</footer>
