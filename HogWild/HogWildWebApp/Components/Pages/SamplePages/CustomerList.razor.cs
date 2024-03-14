@@ -104,13 +104,13 @@ namespace HogWildWebApp.Components.Pages.SamplePages
         //  new customer
         private void New()
         {
-
+            NavigationManager.NavigateTo("/SamplePages/CustomerEdit/0");
         }
 
         //  edit selected customer
         private void EditCustomer(int customerID)
         {
-
+            NavigationManager.NavigateTo($"/SamplePages/CustomerEdit/{customerID}");
         }
 
         //  new invoice for selected customer
