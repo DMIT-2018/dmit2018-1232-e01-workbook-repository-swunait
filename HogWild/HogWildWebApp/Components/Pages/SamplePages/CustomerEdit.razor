@@ -16,6 +16,12 @@
     </h3>
 </header>
 <body>
+<EditForm EditContext="editContext">
+@{
+    // The DataAnnotationsValidator is the standard validator type in Blazor.
+    // Adding this component within an EditForm component will enable form validation
+}
+<DataAnnotationsValidator />
 <div class="row">
     <div class="column">
         <p>
@@ -39,6 +45,91 @@
                        Style="Width: 140px; background-color: lightgray"
                        @bind-Value="customer.Address1" />
         </p>
+
+            <!-- Address 2 -->
+            <p>
+                <label>Address 2:</label>
+                <InputText id="address2"
+                           style="width: 140px; background-color: lightgray"
+                           @bind-Value="customer.Address2" />
+            </p>
+            <!-- City -->
+            <p>
+                <label>City:</label>
+                <InputText id="city"
+                           style="width: 140px; background-color: lightgray"
+                           @bind-Value="customer.City" />
+            </p>
+        </div>
+        <div class="column">
+            <p>
+                <label>Province:</label>
+                <InputSelect @bind-Value="customer.ProvStateID" style="width: 140px; background-color: lightgray">
+                    <option value="0">select ...</option>
+                    @foreach (var prov in provinces)
+                    {
+                        <option value="@prov.LookupID">@prov.Name</option>
+                    }
+                </InputSelect>
+            </p>
+            <p>
+                <label>Country:</label>
+                <InputSelect @bind-Value="customer.CountryID" style="width: 140px; background-color: lightgray">
+                    <option value="0">select ...</option>
+                    @foreach (var country in countries)
+                    {
+                        <option value="@country.LookupID">@country.Name</option>
+                    }
+                </InputSelect>
+            </p>
+            <p>
+                <label>Postal Code:</label>
+                <InputText id="postalCode" style="width: 140px; background-color: lightgray" @bind-Value="customer.PostalCode" />
+            </p>
+            <p>
+                <label>Phone:</label>
+                <InputText id="phone" style="width: 140px; background-color: lightgray" @bind-Value="customer.Phone" />
+            </p>
+            <p>
+                <label>Email:</label>
+                <InputText id="email" style="width: 300px; background-color: lightgray" @bind-Value="customer.Email" />
+            </p>
+            <p>
+                <label>Customer Status:</label>
+                <InputSelect @bind-Value="customer.StatusID" style="width: 140px; background-color: lightgray">
+                    <option value="0">select ...</option>
+                    @foreach (var status in statusLookup)
+                    {
+                        <option value="@status.LookupID">@status.Name</option>
+                    }
+                </InputSelect>
+            </p>
+
     </div>
 </div>
+
+</EditForm>
+
+    <button class="btn-success" @onclick="Save">Save</button>
+    <button class="btn-success" @onclick="Cancel">@closeButtonText</button>
+
 </body>
+
+<footer>
+    @if (hasFeedback)
+    {
+        <blockquote>@feedbackMessage</blockquote>
+    }
+    @if (hasError)
+    {
+        <blockquote>
+            @errorMessage
+            <ul>
+                @foreach (var detail in errorDetails)
+                {
+                    <li>@detail</li>
+                }
+            </ul>
+        </blockquote>
+    }
+</footer>
