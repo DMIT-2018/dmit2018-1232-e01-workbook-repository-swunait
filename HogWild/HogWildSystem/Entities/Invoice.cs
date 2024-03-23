@@ -14,7 +14,7 @@ internal partial class Invoice
     [Key]
     public int InvoiceID { get; set; }
 
-    public DateOnly InvoiceDate { get; set; }
+    public DateTime InvoiceDate { get; set; }
 
     public int CustomerID { get; set; }
 
