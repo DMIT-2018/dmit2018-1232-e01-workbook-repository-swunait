@@ -1,0 +1,43 @@
+﻿@using System.ComponentModel.DataAnnotations
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+
+    [Parameter] public string Message { get; set; }
+
+    [Parameter]
+    public Action<bool?> OnClose { get; set; }
+
+}
+
+@if (IsVisible)
+{
+    <div class="dialog-background">
+        <div class="dialog-window">
+            <p>@Message</p>
+            <br />
+            <button class="btn btn-primary" @onclick="() => OnClose.Invoke(true)">Ok</button>
+            <button class="btn btn-secondary" @onclick="() => OnClose.Invoke(false)">Cancel</button>
+        </div>
+    </div>
+}
+
+<style>
+    .dialog-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dialog-window {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+</style>

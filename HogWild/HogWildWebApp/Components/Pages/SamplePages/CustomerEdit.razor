@@ -1,120 +1,127 @@
 ﻿@page "/SamplePages/CustomerEdit/{CustomerID:int}"
+@using HogWildWebApp.Components.Layout
 
 <PageTitle>Customer Edit</PageTitle>
 
 <header>
-    <h3>
-        Customer Edit
-        @if (CustomerID == 0)
-        {
-            <h5>New Customer</h5>
-        }
-        else
-        {
-            <h5>@customer.LastName</h5>
-        }
-    </h3>
+    <h3>Customer Edit</h3>
+    @if (CustomerID == 0)
+    {
+        <h5>New Customer</h5>
+    }
+    else
+    {
+        <h5>@customer.LastName</h5>
+    }
 </header>
+
 <body>
-<EditForm EditContext="editContext">
-@{
-    // The DataAnnotationsValidator is the standard validator type in Blazor.
-    // Adding this component within an EditForm component will enable form validation
-}
-<DataAnnotationsValidator />
-<div class="row">
-    <div class="column">
-        <p>
-            <!-- First Name -->
-            <label for="firstName">First Name:</label>
-            <InputText id="firstName"
-                       Style="Width: 140px; background-color: lightgray"
-                       @bind-Value="customer.FirstName" />
-        </p>
-        <p>
-            <!-- Last Name -->
-            <label for="lastName">Last Name:</label>
-            <InputText id="lastName"
-                       Style="Width: 140px; background-color: lightgray"
-                       @bind-Value="customer.LastName" />
-        </p>
-        <p>
-            <!-- Address 1 -->
-            <label for="address1">Address 1:</label>
-            <InputText id="address1"
-                       Style="Width: 140px; background-color: lightgray"
-                       @bind-Value="customer.Address1" />
-        </p>
-
-            <!-- Address 2 -->
-            <p>
-                <label>Address 2:</label>
-                <InputText id="address2"
-                           style="width: 140px; background-color: lightgray"
-                           @bind-Value="customer.Address2" />
-            </p>
-            <!-- City -->
-            <p>
-                <label>City:</label>
-                <InputText id="city"
-                           style="width: 140px; background-color: lightgray"
-                           @bind-Value="customer.City" />
-            </p>
+   <EditForm EditContext="editContext">
+    <DataAnnotationsValidator />
+    <div class="form-container">
+        <!-- Column 1 -->
+        <div class="form-column">
+            <div class="form-row">
+                <label for="firstName">First Name:</label>
+                <InputText id="firstName" class="input-background" @bind-Value="customer.FirstName" />
+                <ValidationMessage For="@(() => customer.FirstName)" />
+            </div>
+            <div class="form-row">
+                <label for="lastName">Last Name:</label>
+                <InputText id="lastName" class="input-background" @bind-Value="customer.LastName" />
+                <ValidationMessage For="@(() => customer.LastName)" />
+            </div>
+            <div class="form-row">
+                <label for="address1">Address 1:</label>
+                <InputText id="address1" class="input-background" @bind-Value="customer.Address1" />
+            </div>
+            <div class="form-row">
+                <label for="address2">Address 2:</label>
+                <InputText id="address2" class="input-background" @bind-Value="customer.Address2" />
+            </div>
+            <div class="form-row">
+                <label for="city">City:</label>
+                <InputText id="city" class="input-background" @bind-Value="customer.City" />
+            </div>
         </div>
-        <div class="column">
-            <p>
-                <label>Province:</label>
-                <InputSelect @bind-Value="customer.ProvStateID" style="width: 140px; background-color: lightgray">
-                    <option value="0">select ...</option>
-                    @foreach (var prov in provinces)
-                    {
-                        <option value="@prov.LookupID">@prov.Name</option>
-                    }
-                </InputSelect>
-            </p>
-            <p>
-                <label>Country:</label>
-                <InputSelect @bind-Value="customer.CountryID" style="width: 140px; background-color: lightgray">
-                    <option value="0">select ...</option>
-                    @foreach (var country in countries)
-                    {
-                        <option value="@country.LookupID">@country.Name</option>
-                    }
-                </InputSelect>
-            </p>
-            <p>
-                <label>Postal Code:</label>
-                <InputText id="postalCode" style="width: 140px; background-color: lightgray" @bind-Value="customer.PostalCode" />
-            </p>
-            <p>
-                <label>Phone:</label>
-                <InputText id="phone" style="width: 140px; background-color: lightgray" @bind-Value="customer.Phone" />
-            </p>
-            <p>
-                <label>Email:</label>
-                <InputText id="email" style="width: 300px; background-color: lightgray" @bind-Value="customer.Email" />
-            </p>
-            <p>
-                <label>Customer Status:</label>
-                <InputSelect @bind-Value="customer.StatusID" style="width: 140px; background-color: lightgray">
-                    <option value="0">select ...</option>
-                    @foreach (var status in statusLookup)
-                    {
-                        <option value="@status.LookupID">@status.Name</option>
-                    }
-                </InputSelect>
-            </p>
 
+        <!-- Column 2 -->
+        <div class="form-column">
+            <div class="form-row">
+                <label for="province">Province:</label>
+                <InputSelect @bind-Value="customer.ProvStateID" class="input-background">
+                    <option value="0">Select...</option>
+                        @foreach (var prov in provinces)
+                        {
+                            <option value="@prov.LookupID">@prov.Name</option>
+                        }
+                </InputSelect>
+            </div>
+            <div class="form-row">
+                <label for="country">Country:</label>
+                <InputSelect @bind-Value="customer.CountryID" class="input-background">
+                    <option value="0">Select...</option>
+                        @foreach (var country in countries)
+                        {
+                            <option value="@country.LookupID">@country.Name</option>
+                        }
+                </InputSelect>
+            </div>
+            <div class="form-row">
+                <label for="postalCode">Postal Code:</label>
+                <InputText id="postalCode" class="input-background" @bind-Value="customer.PostalCode" />
+            </div>
+            <div class="form-row">
+                <label for="phone">Phone:</label>
+                <InputText id="phone" class="input-background" @bind-Value="customer.Phone" />
+                <ValidationMessage For="@(() => customer.Phone)" />
+            </div>
+            <div class="form-row">
+                <label for="email">Email:</label>
+                <InputText id="email" class="input-background" style="width: 300px;" @bind-Value="customer.Email" />
+                <ValidationMessage For="@(() => customer.Email)" />
+            </div>
+            <div class="form-row">
+                <label for="status">Customer Status:</label>
+                <InputSelect @bind-Value="customer.StatusID" class="input-background">
+                    <option value="0">Select...</option>
+                        @foreach (var status in statusLookup)
+                        {
+                            <option value="@status.LookupID">@status.Name</option>
+                        }
+                </InputSelect>
+            </div>
+        </div>
     </div>
-</div>
-
 </EditForm>
 
-    <button class="btn-success" @onclick="Save">Save</button>
-    <button class="btn-success" @onclick="Cancel">@closeButtonText</button>
 
+    <div>
+        <button class="btn-success" disabled="@disableSaveButton" @onclick="Save">Save</button>
+        <button class="btn-success" @onclick="Cancel">@closeButtonText</button>
+        <button class="btn btn-primary" disabled="@disableViewButton" @onclick="NewInvoice">New Invoice</button>
+    </div>
+
+    <div class="previous-purchases">
+        <h2>Previous Purchases</h2>
+        <TableTemplate Items="invoices" Context="InvoiceView">
+            <TableHeader>
+                <th></th>
+                <th>Invoice ID</th>
+                <th>Invoice Date</th>
+                <th>Total</th>
+            </TableHeader>
+            <RowTemplate>
+                <td>
+                    <button class="btn btn-primary" disabled="@disableViewButton" @onclick="() => EditInvoice(InvoiceView.InvoiceID)">Edit</button>
+                </td>
+                <td>@InvoiceView.InvoiceID</td>
+                <td>@InvoiceView.InvoiceDate.Date.ToShortDateString()</td>
+                <td>@InvoiceView.Total.ToString("C")</td>
+            </RowTemplate>
+        </TableTemplate>
+    </div>
 </body>
-
 <footer>
     @if (hasFeedback)
     {

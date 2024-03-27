@@ -1,0 +1,149 @@
+﻿@page "/SamplePages/InvoiceEdit/{InvoiceID:int}/{CustomerID:int}/{EmployeeID:int}"
+@using HogWildSystem.ViewModels
+@using HogWildWebApp.Components.Layout
+
+<PageTitle>Invoice Edit</PageTitle>
+
+<header>
+    @if (InvoiceID == 0)
+    {
+        <h3>New Invoice</h3>
+    }
+    else
+    {
+        <h3>Invoice: @InvoiceID</h3>
+    }
+</header>
+
+<div class="row">
+    <h4>Invoice Date: @invoice.InvoiceDate.Date.ToShortDateString()</h4>
+    <h4>Employee: @invoice.EmployeeName</h4>
+    <h4>Customer: @invoice.CustomerName</h4>
+</div>
+
+<body>
+<div>
+    <h4>Search</h4>
+    <p>
+        <label>Categories:</label>
+        <select @bind="categoryID" style="width: 140px; background-color: lightgray;">
+            <option value="0">select ...</option>
+            @foreach (var category in partCategories)
+            {
+                <option value="@category.LookupID">@category.Name</option>
+            }
+        </select>
+    </p>
+    <p>
+        <label>Description:</label>
+        <input type="text" id="description" style="width: 140px; background-color: lightgray;" @bind="description" />
+    </p>
+    <button class="btn btn-primary" @onclick="SearchParts">Search</button>
+</div>
+
+@if (parts.Count() == 0)
+{
+    <p><em>Please enter either a description or category</em></p>
+}
+
+@if (invoice.InvoiceLines.Any() || parts.Count() > 0)
+{
+    <!-- Parts Table -->
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th>CategoryName</th>
+            <th>PartID</th>
+            <th>Description</th>
+            <th>Cost</th>
+            <th>Price</th>
+            <th>ROL</th>
+            <th>QOH</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var PartView in parts)
+        {
+            <tr>
+                <td><button class="btn btn-success" @onclick="() => AddPart(PartView.PartID)">Add</button></td>
+                <td>@PartView.CategoryName</td>
+                <td>@PartView.PartID</td>
+                <td>@PartView.Description</td>
+                <td>@PartView.Cost</td>
+                <td>@PartView.Price</td>
+                <td>@PartView.ROL</td>
+                <td>@PartView.QOH</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <!-- Invoice Lines Table -->
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th>Part ID</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Ext. Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var InvoiceLineView in invoice.InvoiceLines)
+        {
+            <tr>
+                <td><button class="btn btn-warning" @onclick="() => DeleteInvoiceLine(InvoiceLineView.PartID)">Delete</button></td>
+                <td>@InvoiceLineView.PartID</td>
+                <td>@InvoiceLineView.Description</td>
+                <td><input type="number" @bind-value="InvoiceLineView.Quantity" class="input-mini" @oninput="UpdateSubtotalAndTax" /></td>
+                <td>@InvoiceLineView.Price</td>
+                <td>@InvoiceLineView.ExtentPrice</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="stack-vertical">
+            <p>---------------------------</p>
+            <p>SubTotal: @invoice.SubTotal.ToString("c")</p>
+            <p>Tax: @invoice.Tax.ToString("c")</p>
+            <p>==============</p>
+            <p><strong>Total: @invoice.Total.ToString("c")</strong></p>
+        </div>
+    </div>
+}
+
+<div>
+    <button class="btn btn-primary" @onclick="Save">Save</button>
+    <button class="btn btn-secondary" @onclick="Close">Close/Cancel</button>
+</div>
+
+</body>
+
+<footer>
+    @if (hasFeedback)
+    {
+        <blockquote>@feedbackMessage</blockquote>
+    }
+    @if (hasError)
+    {
+        <blockquote>
+            @errorMessage
+            <ul>
+                @foreach (var detail in errorDetails)
+                {
+                    <li>@detail</li>
+                }
+            </ul>
+        </blockquote>
+    }
+</footer>
+
+<SimpleDialog IsVisible="@showDialog"
+              Message="@dialogMessage"
+              OnClose="@(e => SimpleDialogResult(e))"></SimpleDialog>
+              

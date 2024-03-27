@@ -1,0 +1,35 @@
+﻿@page "/SamplePages/SimpleNonIndexList"
+@using HogWildWebApp.Components.Layout
+
+<h3>Simple Non Index List</h3>
+<div>
+    <p>
+        <label>
+            First Name:
+            <input type="text" @bind="customerName" />
+        </label>
+        <button class="btn-success"
+                @onclick="(() => AddCustomerToList())">
+            Add Customer
+        </button>
+    </p>
+    <div>
+        <TableTemplate Items="Customers" Context="CustomerEditView">
+            <TableHeader>
+                <th></th>
+                <th>Employee Id</th>
+                <th>Name</th>
+            </TableHeader>
+            <RowTemplate>
+                <td>
+                    <button class="btn-danger"
+                            @onclick="(() => RemoveCustomer(CustomerEditView.CustomerID))">
+                        Remove
+                    </button>
+                </td>
+                <td>@CustomerEditView.CustomerID</td>
+                <td>@CustomerEditView.FirstName</td>
+            </RowTemplate>
+        </TableTemplate>
+    </div>
+</div>

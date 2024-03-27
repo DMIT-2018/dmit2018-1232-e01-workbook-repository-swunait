@@ -1,0 +1,59 @@
+﻿@page "/SamplePages/SimpleListToList"
+@using HogWildWebApp.Components.Layout
+
+<h3>Simple List to List</h3>
+
+<div id="container">
+    <div>
+        <TableTemplate Items="Inventory" Context="PartView">
+            <TableHeader>
+                <th></th>
+                <th>Part ID</th>
+                <th>Description</th>
+                <th>Cost</th>
+                <th>Price</th>
+                <th>QOH</th>
+            </TableHeader>
+            <RowTemplate>
+                <td>
+                    <button class="btn-success"
+                            @onclick="() => AddPartToCart(PartView.PartID)">
+                        Add
+                    </button>
+                </td>
+                <td>@PartView.PartID</td>
+                <td>@PartView.Description</td>
+                <td>@PartView.Cost</td>
+                <td>@PartView.Price</td>
+                <td>@PartView.QOH</td>
+            </RowTemplate>
+        </TableTemplate>
+    </div>
+    <div>
+        <TableTemplate Items="ShoppingCart" Context="InvoiceLineView">
+            <TableHeader>
+                <th></th>
+                <th>Invoice Line ID</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Taxable</th>
+                <th>Extended Price</th>
+            </TableHeader>
+            <RowTemplate>
+                <td>
+                    <button class="btn-danger" @onclick="(() =>
+                            RemovePartFromCart(InvoiceLineView.PartID))">
+                        Remove
+                    </button>
+                </td>
+                <td>@InvoiceLineView.InvoiceLineID</td>
+                <td>@InvoiceLineView.Description</td>
+                <td>@InvoiceLineView.Price</td>
+                <td>@InvoiceLineView.Quantity</td>
+                <td>@InvoiceLineView.Taxable</td>
+                <td>@InvoiceLineView.ExtentPrice</td>
+            </RowTemplate>
+        </TableTemplate>
+    </div>
+</div>

@@ -1,9 +1,12 @@
 ﻿@page "/SamplePages/CustomerList"
 @using HogWildWebApp.Components.Layout
+@using HogWildWebApp.Components.BlazorPagination
+<PageTitle>Customer List</PageTitle>
 
-<PageTitle>Customer LIst</PageTitle>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <h3>Customer List</h3>
-
 <header>
     <h4>Search</h4>
     <p>
@@ -22,25 +25,54 @@
     <button class="btn-success" @onclick="New">New</button>
 </header>
 <body>
-    @if (Customers.Count == 0)
+    @if (PaginatorCustomerSearch.RowCount == 0)
     {
         <p><em>Please enter either a last name or phone number</em></p>
     }
     else
     {
-        <!-- THis section defines a TableTemplate for displaying customer infomration-->
-        <TableTemplate Items="Customers" Context="CustomerSearchView">
-            <!-- The following section defines the header row of the table.-->
+        <!--
+        NOTE: To use the Sort Icon, you must added the following to the _host.cshtml file
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        -->
+        <!-- This section defines a TableTemplate for displaying customer information. -->
+        <TableTemplate Items="PaginatorCustomerSearch.Results" Context="CustomerSearchView">
+            <!-- The following section defines the header row of the table. -->
             <TableHeader>
-                <!-- Labels information in each column-->
-                <th></th><!-- Empty column for buttons-->
-                <th></th><!-- Empty column for buttons-->
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>City</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Total Sales</th>
+                <!-- Labels information in each column -->
+                <th></th> <!-- Empty column for buttons -->
+                <th></th> <!-- Empty column for buttons -->
+                <th class="SortField @GetSortColumn("FirstName")"
+                    @onclick="@( () => Sort("FirstName"))">
+                    First Name
+                    <i class="@(SetSortIcon("FirstName"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("LastName")"
+                    @onclick="@( () => Sort("LastName"))">
+                    Last Name
+                    <i class="@(SetSortIcon("LastName"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("City")"
+                    @onclick="@( () => Sort("City"))">
+                    City
+                    <i class="@(SetSortIcon("City"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("Phone")"
+                    @onclick="@( () => Sort("Phone"))">
+                    Phone
+                    <i class="@(SetSortIcon("Phone"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("Email")"
+                    @onclick="@( () => Sort("Email"))">
+                    Email
+                    <i class="@(SetSortIcon("Email"))"></i>
+                </th>
+                <th class="SortField @GetSortColumn("TotalSales")"
+                    @onclick="@( () => Sort("TotalSales"))">
+                    Total Sales
+                    <i class="@(SetSortIcon("TotalSales"))"></i>
+                </th>
             </TableHeader>
             <!-- The following section defines the row template for displaying customer data. -->
             <RowTemplate>
@@ -55,7 +87,7 @@
                     <!-- Button to create a new invoice for the customer -->
                     <button class="btn-success"
                             @onclick="() => NewInvoice(CustomerSearchView.CustomerID)">
-                        New Invoice
+                        New Invoice - Not Used
                     </button>
                 </td>
                 <!-- Display customer information in each column -->
@@ -67,6 +99,19 @@
                 <td>$@CustomerSearchView.TotalSales</td>
             </RowTemplate>
         </TableTemplate>
+        <div align="center">
+            <BlazorPager CurrentPage="PaginatorCustomerSearch.CurrentPage"
+                         PageCount="PaginatorCustomerSearch.PageCount"
+                         VisiblePages="3"
+                         ShowFirstLast="true"
+                         ShowPageNumbers="true"
+                         FirstText="&laquo;"
+                         LastText="&raquo;"
+                         NextText="&rsaquo;"
+                         PreviousText="&lsaquo;"
+                         OnPageChanged="(async e => { CurrentPage = e; await Search();})">
+            </BlazorPager>
+        </div>
     }
 </body>
 <footer>

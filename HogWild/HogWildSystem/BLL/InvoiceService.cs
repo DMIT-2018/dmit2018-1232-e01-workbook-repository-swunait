@@ -105,10 +105,17 @@ namespace HogWildSystem.BLL
                                 RemoveFromViewFlag = x.RemoveFromViewFlag
                             }).ToList()
                     }).FirstOrDefault();
-                customerID = invoice.CustomerID;
+                if (invoice != null)
+                {
+                    customerID = invoice.CustomerID;
+                }
             }
-            invoice.CustomerName = GetCustomerFullName(customerID);
-            invoice.EmployeeName = GetEmployeeFullName(employeeID);
+            if (invoice != null)
+            {
+                invoice.CustomerName = GetCustomerFullName(customerID);
+                invoice.EmployeeName = GetEmployeeFullName(employeeID);
+            }
+
             return invoice;
         }
 
